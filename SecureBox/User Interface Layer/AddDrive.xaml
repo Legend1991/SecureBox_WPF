@@ -1,0 +1,40 @@
+﻿<Window x:Class="SecureBox.User_Interface_Layer.AddDrive"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Add Drive" Height="403" Width="484" ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterScreen" Icon="/SecureBox;component/favicon.ico" SizeToContent="WidthAndHeight">
+    <DockPanel>
+        <GroupBox DockPanel.Dock="Top" Header="Drive Settings" Margin="10,10,10,5">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="285"></ColumnDefinition>
+                    <ColumnDefinition MinWidth="152" MaxWidth="152"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label Content="Choose the location of the new encrypted folder:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Padding="0" />
+                <TextBox Name="textBoxFolder" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Width="270" Margin="10,0,5,5" VerticalAlignment="Top" Text="" Height="23" />
+                <Button Name="buttonBrowse" Grid.Row="1" Grid.Column="2" Height="23" Width="75" Margin="5,0,10,5" HorizontalAlignment="Left" Content="Browse..." Click="buttonBrowse_Click" />
+                <Label Grid.Row="2" Content="Label for the SecureBox drive:" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="10,5,5,5" Padding="0" />
+                <TextBox Name="textBoxLabel" Grid.Row="2" Grid.Column="2" Width="137" HorizontalAlignment="Left" Margin="5,5,10,5" Text="SecureBox" Height="23" LostFocus="textBoxLabel_LostFocus" />
+                <Label Grid.Row="3" Content="Choose the drive letter of SecureBox:" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="10,5,5,10" Padding="0" />
+                <ComboBox Name="comboBoxLetters" Grid.Row="3" Grid.Column="2" Width="57" Height="21" HorizontalAlignment="Left" Margin="5,5,10,10" />
+            </Grid>
+        </GroupBox>
+        <GroupBox DockPanel.Dock="Top" Header="Security Settings" Margin="10,5">
+            <StackPanel>
+                <Label Content="Password:" Margin="10,10,10,0" Padding="0" />
+                <PasswordBox Name="textBoxPass" Height="23" Margin="10,0,10,5" />
+                <Label Content="Confirm:" Padding="0" Margin="10,5,10,0" />
+                <PasswordBox Name="textBoxConf" Margin="10,0,10,10" />
+            </StackPanel>
+        </GroupBox>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" FlowDirection="RightToLeft">
+            <Button Name="buttonCancel" HorizontalAlignment="Right" FlowDirection="LeftToRight" Width="75" Height="23" Margin="10" Content="Cancel" VerticalAlignment="Bottom" Click="buttonCancel_Click" />
+            <Button Name ="buttonOk" HorizontalAlignment="Right" Width="75" Height="23" Margin="10" Content="OK" VerticalAlignment="Bottom" Click="buttonOk_Click" />
+        </StackPanel>
+    </DockPanel>
+</Window>

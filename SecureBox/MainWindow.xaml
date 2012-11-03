@@ -1,0 +1,57 @@
+﻿<Window  x:Class="SecureBox.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="SecureBox" Height="300" Icon="/SecureBox;component/favicon.ico" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" DataContext="{Binding}" Width="525" Closing="Window_Closing">
+    <DockPanel>
+        <ToolBar DockPanel.Dock="Top" OverridesDefaultStyle="False" IsEnabled="True" Margin="0" AllowDrop="False" ClipToBounds="True" SnapsToDevicePixels="False" UseLayoutRounding="False" VerticalAlignment="Top">
+            <Button Name="addDrive">
+                <StackPanel>
+                    <Image Source="/SecureBox;component/Images/Add.png" Width="48" Height="48" ToolTip="Click to add drive"></Image>
+                    <Label TextOptions.TextFormattingMode="Display" Content="Add" Padding="0" HorizontalContentAlignment="Center" />
+                </StackPanel>
+            </Button>
+            <Button Name="removeDrive">
+                <StackPanel>
+                    <Image Source="/SecureBox;component/Images/Remove.png" Width="48" Height="48"></Image>
+                    <Label TextOptions.TextFormattingMode="Display" Content="Remove" Padding="0" HorizontalContentAlignment="Center" />
+                </StackPanel>
+            </Button>
+            <Separator></Separator>
+            <Button Name="mountDrive">
+                <StackPanel>
+                    <Image Source="/SecureBox;component/Images/Mount.png" Width="48" Height="48"></Image>
+                    <Label TextOptions.TextFormattingMode="Display" Content="Mount" Padding="0" HorizontalContentAlignment="Center" />
+                </StackPanel>
+            </Button>
+            <Button Name="unmountDrive">
+                <StackPanel>
+                    <Image Source="/SecureBox;component/Images/Unmount.png" Width="48" Height="48"></Image>
+                    <Label TextOptions.TextFormattingMode="Display" Content="Unmount" Padding="0" HorizontalContentAlignment="Center" />
+                </StackPanel>
+            </Button>
+            <Separator></Separator>
+            <Button Name="changePassword">
+                <StackPanel>
+                    <Image Source="/SecureBox;component/Images/Change Password.png" Width="48" Height="48"></Image>
+                    <Label TextOptions.TextFormattingMode="Display" Content="Change Password" Padding="0" HorizontalContentAlignment="Center" />
+                </StackPanel>
+            </Button>
+            <Button Name="aboutApp">
+                <StackPanel>
+                    <Image Source="/SecureBox;component/Images/About.png" Width="48" Height="48"></Image>
+                    <Label TextOptions.TextFormattingMode="Display" Content="About" Padding="0" HorizontalContentAlignment="Center" />
+                </StackPanel>
+            </Button>
+        </ToolBar>
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <DataGrid Margin="0,0,0,0" Name="drivesList" OverridesDefaultStyle="False" BorderThickness="0" Background="White" SelectionMode="Single" GridLinesVisibility="None" IsReadOnly="True"></DataGrid>
+        </ScrollViewer>
+    </DockPanel>
+    <Window.Resources>
+        <ContextMenu x:Key="TrayMenu">
+            <MenuItem Header="Hide SecureBox" Click="ShowHideMainWindow" />
+            <Separator />
+            <MenuItem Header="Exit" Click="MenuExitClick" />
+        </ContextMenu>
+    </Window.Resources>
+</Window>
