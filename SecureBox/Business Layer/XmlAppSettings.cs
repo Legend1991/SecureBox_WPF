@@ -14,7 +14,9 @@ namespace SecureBox.BL
         private const string labelElem = "label";
         private const string mountedElem = "mounted";
         private const string rootElem = "root";
-        private const string settingsFile = "\\appsettings.xml";
+        private string appPath = AppDomain.CurrentDomain.BaseDirectory;
+        private string settingFilePath;
+        private const string settingsFile = "appsettings.xml";
         private const string emptyElemValue = "0";
         private const int firstLetter = 0;
         private const char mountedDrive = '1';
@@ -23,12 +25,14 @@ namespace SecureBox.BL
 
         public XmlAppSettings(string root)
         {
+            settingFilePath = Path.Combine(appPath, settingsFile);
+
             xmlDoc = new XmlDocument();
-            if (!File.Exists(settingsFile))
+            if (!File.Exists(settingFilePath))
             {
                 CreateSettings();
             }
-            xmlDoc.Load(settingsFile);
+            xmlDoc.Load(settingFilePath);
         }
 
         public void AddDrive(DriveInfo drive)
@@ -52,7 +56,7 @@ namespace SecureBox.BL
             driveNode.AppendChild(mountedNode);
 
             xmlDoc.DocumentElement.AppendChild(driveNode);
-            xmlDoc.Save(settingsFile);
+            xmlDoc.Save(settingFilePath);
         }
 
         public List<DriveInfo> GetDrives()
@@ -106,7 +110,7 @@ namespace SecureBox.BL
                 if (drive.Root == root)
                 {
                     xmlDoc.DocumentElement.RemoveChild(table);
-                    xmlDoc.Save(settingsFile);
+                    xmlDoc.Save(settingFilePath);
                     return true;
                 }
             }
@@ -136,7 +140,7 @@ namespace SecureBox.BL
                             break;
                         }
                     }
-                    xmlDoc.Save(settingsFile);
+                    xmlDoc.Save(settingFilePath);
                     return true;
                 }
             }
@@ -148,7 +152,7 @@ namespace SecureBox.BL
             XmlWriterSettings xmlSettings = new XmlWriterSettings();
             xmlSettings.Indent = true;
 
-            using (XmlWriter writer = XmlWriter.Create(settingsFile, xmlSettings))
+            using (XmlWriter writer = XmlWriter.Create(settingFilePath, xmlSettings))
             {
                 writer.WriteStartElement(startElem);
                 writer.WriteEndElement();
