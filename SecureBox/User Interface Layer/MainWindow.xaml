@@ -1,7 +1,7 @@
 ﻿<Window x:Class="SecureBox.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="SecureBox" Height="300" Width="425" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Icon="/SecureBox;component/favicon.ico" Closing="Window_Closing">
+        Title="SecureBox" Height="300" Width="452" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Icon="/SecureBox;component/favicon.ico" Closing="Window_Closing">
     <DockPanel>
         <ToolBar DockPanel.Dock="Top" VerticalAlignment="Top">
             <Button Name="addDrive" Padding="0" Margin="0" Click="addDrive_Click">
@@ -36,6 +36,10 @@
                     <Label HorizontalAlignment="Center" VerticalAlignment="Top" Padding="0">Change Password</Label>
                 </StackPanel>
             </Button>
+            <Button Name="spaceSeparator" Padding="0" Margin="0">
+                <StackPanel Width="48">
+                </StackPanel>
+            </Button>
             <Button Name="aboutButton" Padding="0" Margin="0" Click="aboutButton_Click">
                 <StackPanel>
                     <Image Source="/SecureBox;component/Images/About.png" Height="48" Width="48"></Image>
@@ -44,7 +48,13 @@
             </Button>
         </ToolBar>
         <ScrollViewer VerticalScrollBarVisibility="Auto">
-            <DataGrid Name="drivesList" GridLinesVisibility="None" SelectionMode="Single" Background="White" CanUserResizeRows="False" SelectionChanged="drivesList_SelectionChanged"></DataGrid>
+            <DataGrid Name="drivesList" GridLinesVisibility="None" Background="White" CanUserResizeRows="False" SelectionChanged="drivesList_SelectionChanged" BorderThickness="0,1,0,0" BorderBrush="#FF656155" CanUserSortColumns="False" SelectionMode="Single" IsHitTestVisible="True" VerticalGridLinesBrush="Black">
+                <DataGrid.CellStyle>
+                    <Style TargetType="DataGridCell">
+                        <Setter Property="BorderThickness" Value="0"/>
+                    </Style>
+                </DataGrid.CellStyle>
+            </DataGrid>
         </ScrollViewer>
     </DockPanel>
 </Window>
