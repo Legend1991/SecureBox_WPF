@@ -54,6 +54,7 @@ namespace SecureBox.BL
                     fs.Close();
                 }
 
+                //Console.WriteLine("Create file: {0}\t access: {1}", filename, access);
                 return DokanNet.DOKAN_SUCCESS;
             }
             catch (Exception e)
@@ -110,20 +111,35 @@ namespace SecureBox.BL
             {
                 long offsetDif = offset % blockSize;
                 long decOffset = offset - offsetDif;
-                int decBlockSize = buffer.Length;
+                long decEndDiff = (offset + buffer.Length) % blockSize;
 
                 FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read);
                 fs.Seek(decOffset, SeekOrigin.Begin);
 
-                Byte[] crpBuff = new Byte[decBlockSize + decOffset];
+                int i = 0;
 
-                readBytes = (uint)fs.Read(crpBuff, 0, crpBuff.Length);
-                readBytes = (uint)buffer.Length;
-                //readBytes -= (uint)offsetDif;
+                while ((fs.Position < offset + buffer.Length) && fs.Position < fs.Length)
+                {
+                    Byte[] crpBuff = new Byte[blockSize];
+                    int lentgh = fs.Read(crpBuff, 0, crpBuff.Length);
+                    int offsetStart = i > 0 ? 0 : (int)(offsetDif);
+                    int offsetEnd = fs.Position > offset + buffer.Length ? lentgh - (int)decEndDiff : 0;
+                    Array.Copy(encryptor.EnDecrypt(false, crpBuff), offsetStart, buffer, i, lentgh - offsetStart - offsetEnd);
+
+                    if (i == 0)
+                    {
+                        i += lentgh - (int)offsetDif;
+                    }
+                    else
+                    {
+                        i += lentgh;
+                    }
+                }
+
                 fs.Close();
+                readBytes = (uint)buffer.Length;
 
-                Array.Copy(encryptor.EnDecrypt(false, crpBuff), 0, buffer, 0, buffer.Length);
-                Console.WriteLine("File: {0}\tBlock size: {1}\toffset: {2}", filename, buffer.Length, offset);
+                //Console.WriteLine("Read file: {0}\tBlock size: {1}\toffset: {2}", filename, buffer.Length, offset);
                 return DokanNet.DOKAN_SUCCESS;
             }
             catch (Exception e)
@@ -151,14 +167,13 @@ namespace SecureBox.BL
                     fs.Seek(offset, SeekOrigin.Begin);
                 }
 
-                long pos = fs.Position;
-
                 Byte[] crpBuff = encryptor.EnDecrypt(true, buffer);
 
                 fs.Write(crpBuff, 0, crpBuff.Length);
                 writtenBytes = (uint)crpBuff.Length;
                 fs.Close();
 
+                //Console.WriteLine("Write file: {0}\tBlock size: {1}\toffset: {2}", filename, buffer.Length, offset);
                 return DokanNet.DOKAN_SUCCESS;
             }
             catch (Exception e)

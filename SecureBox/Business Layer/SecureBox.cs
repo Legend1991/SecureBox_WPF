@@ -25,7 +25,6 @@ namespace SecureBox.BL
             encryptor = new Encryptor(Encoding.Default.GetBytes(internalKey));
             threads = new Dictionary<char, Thread>();
             Initialize();
-            DrivesList = appSettings.GetDrives();
         }
 
         public bool AddDrive(DriveInfo drive, string password)
@@ -45,7 +44,6 @@ namespace SecureBox.BL
 
             MountDrive(drive);
             appSettings.AddDrive(drive);
-            DrivesList = appSettings.GetDrives();
 
             return true;
         }
@@ -56,7 +54,6 @@ namespace SecureBox.BL
             {
                 UnmountDrive(drive);
                 appSettings.RemoveDrive(drive);
-                DrivesList = appSettings.GetDrives();
                 return true;
             }
 
@@ -74,7 +71,6 @@ namespace SecureBox.BL
                 threads.Add(drive.Letter, newThread);
 
                 appSettings.UnMountDrive(drive, true);
-                DrivesList = appSettings.GetDrives();
                 return true;
             }
 
@@ -92,7 +88,6 @@ namespace SecureBox.BL
                     threads.Remove(drive.Letter);
 
                     appSettings.UnMountDrive(drive, false);
-                    DrivesList = appSettings.GetDrives();
                 }
             }
             catch (Exception e)
@@ -242,8 +237,8 @@ namespace SecureBox.BL
 
         public List<DriveInfo> DrivesList
         {
-            get;
-            private set;
+            get { return appSettings.GetDrives(); }
+            private set {}
         }
     }
 }
