@@ -48,7 +48,7 @@
             </Button>
         </ToolBar>
         <ScrollViewer VerticalScrollBarVisibility="Auto">
-            <DataGrid Name="drivesList" GridLinesVisibility="None" Background="White" CanUserResizeRows="False" SelectionChanged="drivesList_SelectionChanged" BorderThickness="0,1,0,0" BorderBrush="#FF656155" CanUserSortColumns="False" SelectionMode="Single" IsHitTestVisible="True" VerticalGridLinesBrush="Black">
+            <DataGrid Name="drivesList" GridLinesVisibility="None" CanUserResizeRows="False" SelectionChanged="drivesList_SelectionChanged" BorderThickness="0,1,0,0" BorderBrush="#FF656155" CanUserSortColumns="False" SelectionMode="Single" IsHitTestVisible="True" VerticalGridLinesBrush="Black" Background="{x:Null}">
                 <DataGrid.CellStyle>
                     <Style TargetType="DataGridCell">
                         <Setter Property="BorderThickness" Value="0"/>

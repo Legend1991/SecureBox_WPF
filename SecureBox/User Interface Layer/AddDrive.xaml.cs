@@ -1,16 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
 using System.IO;
+using SecureBox.BL;
 
 namespace SecureBox.User_Interface_Layer
 {
@@ -24,11 +14,11 @@ namespace SecureBox.User_Interface_Layer
         private const string errorPath = "Please enter a valid location!";
         private const string defaultLabel = "SecureBox";
         private const string endRow = "\n";
-        SecureBox.BL.SecureBox secBox;
+        BL.SecureBox secBox;
         private const int first = 0;
         private const int empty = 0;
 
-        public AddDrive(SecureBox.BL.SecureBox secBox)
+        public AddDrive(BL.SecureBox secBox)
         {
             InitializeComponent();
             this.secBox = secBox;
@@ -66,10 +56,19 @@ namespace SecureBox.User_Interface_Layer
             bool result = true;
             string errorString = "";
 
-            if (!Directory.Exists(textBoxFolder.Text))
+            if (!Directory.Exists(textBoxFolder.Text) || textBoxFolder.Text.EndsWith("."))
             {
                 errorString += errorPath + endRow;
                 result = false;
+            }
+
+            foreach (BL.DriveInfo di in secBox.DrivesList)
+            {
+                if (char.ToUpper(textBoxFolder.Text[0]) == di.Letter)
+                {
+                    errorString += errorPath + endRow;
+                    result = false;
+                }
             }
 
             if (textBoxPass.Password != textBoxConf.Password)
@@ -111,7 +110,7 @@ namespace SecureBox.User_Interface_Layer
             string root = textBoxFolder.Text;
             string password = textBoxPass.Password;
 
-            SecureBox.BL.DriveInfo drive = new SecureBox.BL.DriveInfo(letter, label, root, true);
+            BL.DriveInfo drive = new BL.DriveInfo(letter, label, root, true);
 
             secBox.AddDrive(drive, password);
 
