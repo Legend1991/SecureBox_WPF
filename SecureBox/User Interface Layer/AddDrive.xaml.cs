@@ -1,5 +1,12 @@
-﻿using System.Windows;
+﻿using System;
+using System.Data.SQLite;
+using System.Text;
+using System.Windows;
 using System.IO;
+using Microsoft.Win32;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Schema;
 using SecureBox.BL;
 
 namespace SecureBox.User_Interface_Layer
@@ -14,6 +21,8 @@ namespace SecureBox.User_Interface_Layer
         private const string errorPath = "Please enter a valid location!";
         private const string defaultLabel = "SecureBox";
         private const string endRow = "\n";
+        private string customPath = "";
+        private string lastRB;
         BL.SecureBox secBox;
         private const int first = 0;
         private const int empty = 0;
@@ -24,6 +33,7 @@ namespace SecureBox.User_Interface_Layer
             this.secBox = secBox;
             comboBoxLetters.ItemsSource = secBox.GetFreeDriveLetters();
             comboBoxLetters.SelectedIndex = first;
+            CheckCloudStorages();
         }
 
         private void buttonBrowse_Click(object sender, RoutedEventArgs e)
@@ -115,6 +125,64 @@ namespace SecureBox.User_Interface_Layer
             secBox.AddDrive(drive, password);
 
             this.Close();
+        }
+
+        private void CheckCloudStorages()
+        {
+            if (!secBox.IsDropboxAvailable())
+            {
+                rbDropbox.IsEnabled = false;
+            }
+
+            if (!secBox.IsGoogleDriveAvailable())
+            {
+                rbGoogleDrive.IsEnabled = false;
+            }
+
+            if (!secBox.IsOneDriveAvailable())
+            {
+                rbOneDrive.IsEnabled = false;
+            }
+        }
+
+        private void rbCustom_Checked(object sender, RoutedEventArgs e)
+        {
+            lastRB = rbCustom.Name;
+
+            if (textBoxFolder != null)
+            {
+                textBoxFolder.Text = customPath;
+            }
+        }
+
+        private void rbDropbox_Checked(object sender, RoutedEventArgs e)
+        {
+            if (lastRB == rbCustom.Name)
+            {
+                customPath = textBoxFolder.Text;
+            }
+            lastRB = rbDropbox.Name;
+            textBoxFolder.Text = secBox.GetDropboxPath();
+        }
+
+        private void rbGoogleDrive_Checked(object sender, RoutedEventArgs e)
+        {
+            if (lastRB == rbCustom.Name)
+            {
+                customPath = textBoxFolder.Text;
+            }
+            lastRB = rbGoogleDrive.Name;
+            textBoxFolder.Text = secBox.GetGoogleDrivePath();
+        }
+
+        private void rbOneDrive_Checked(object sender, RoutedEventArgs e)
+        {
+            if (lastRB == rbCustom.Name)
+            {
+                customPath = textBoxFolder.Text;
+            }
+            lastRB = rbOneDrive.Name;
+            textBoxFolder.Text = secBox.GetOneDrivePath();
         }
     }
 }

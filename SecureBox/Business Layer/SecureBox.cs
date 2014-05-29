@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SQLite;
 using System.Text;
 using System.IO;
 using System.Security.Cryptography;
 using System.Threading;
 using Dokan;
+using Microsoft.Win32;
+using Newtonsoft.Json.Linq;
 
 namespace SecureBox.BL
 {
@@ -147,6 +150,81 @@ namespace SecureBox.BL
             }
 
             return letters.ToArray();
+        }
+
+        public string GetDropboxPath()
+        {
+            string jsPath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                "Dropbox\\info.json");
+
+            JObject o = JObject.Parse(File.ReadAllText(jsPath));
+
+            return o["personal"]["path"].ToString();
+        }
+
+        public bool IsDropboxAvailable()
+        {
+            string jsPath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                "Dropbox\\info.json");
+
+            return File.Exists(jsPath);
+        }
+
+        public string GetGoogleDrivePath()
+        {
+            string path;
+            string dbPath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                "Google\\Drive\\sync_config.db");
+
+            string csGdrive = @"Data Source=" + dbPath + ";Version=3;New=False;Compress=True;";
+
+            using (var con = new SQLiteConnection(csGdrive))
+            {
+                con.Open();
+
+                using (var sqLitecmd = new SQLiteCommand(con))
+                {
+                    sqLitecmd.CommandText = "select * from data where entry_key='local_sync_root_path'";
+
+                    using (var reader = sqLitecmd.ExecuteReader())
+                    {
+                        reader.Read();
+                        path = reader["data_value"].ToString().Substring(4);
+                    }
+                }
+            }
+
+            return path;
+        }
+
+        public bool IsGoogleDriveAvailable()
+        {
+            string dbPath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                "Google\\Drive\\sync_config.db");
+
+            return File.Exists(dbPath);
+        }
+
+        public string GetOneDrivePath()
+        {
+            string path = (string)Registry.GetValue("HKEY_CURRENT_USER\\Software\\Microsoft\\SkyDrive\\",
+            "UserFolder",
+            null);
+
+            return path;
+        }
+
+        public bool IsOneDriveAvailable()
+        {
+            string exePath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                "Microsoft\\SkyDrive\\SkyDrive.exe");
+
+            return File.Exists(exePath);
         }
 
         private void Initialize()

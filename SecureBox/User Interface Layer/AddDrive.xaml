@@ -10,18 +10,43 @@
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="285"></ColumnDefinition>
                     <ColumnDefinition MinWidth="152" MaxWidth="152"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Label Content="Choose the location of the new encrypted folder:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Padding="0" />
-                <TextBox Name="textBoxFolder" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Width="270" Margin="10,0,5,5" VerticalAlignment="Top" Text="" Height="23" />
-                <Button Name="buttonBrowse" Grid.Row="1" Grid.Column="2" Height="23" Width="75" Margin="5,0,10,5" HorizontalAlignment="Left" Content="Browse..." Click="buttonBrowse_Click" />
-                <Label Grid.Row="2" Content="Label for the SecureBox drive:" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="10,5,5,5" Padding="0" />
-                <TextBox Name="textBoxLabel" Grid.Row="2" Grid.Column="2" Width="137" HorizontalAlignment="Left" Margin="5,5,10,5" Text="SecureBox" Height="23" LostFocus="textBoxLabel_LostFocus" />
-                <Label Grid.Row="3" Content="Choose the drive letter of SecureBox:" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="10,5,5,10" Padding="0" />
-                <ComboBox Name="comboBoxLetters" Grid.Row="3" Grid.Column="2" Width="57" Height="21" HorizontalAlignment="Left" Margin="5,5,10,10" />
+                <Label Grid.Row="0" Content="Choose the location of the new encrypted folder:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Padding="0" />
+                <RadioButton x:Name="rbCustom" GroupName="Path" Grid.Row="1" Grid.Column="0" Margin="10,5,5,5" Checked="rbCustom_Checked" IsChecked="True">
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="/SecureBox;component/Images/Custom.ico" Height="32" Width="32"></Image>
+                        <Label HorizontalAlignment="Center" VerticalAlignment="Center" Padding="5">Custom</Label>
+                    </StackPanel>
+                </RadioButton>
+                <RadioButton x:Name="rbGoogleDrive" GroupName="Path" Grid.Row="1" Grid.Column="0" Margin="90,5,5,5" Checked="rbGoogleDrive_Checked">
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="/SecureBox;component/Images/GoogleDrive.ico" Height="32" Width="32"></Image>
+                        <Label HorizontalAlignment="Center" VerticalAlignment="Center" Padding="5">Google Drive</Label>
+                    </StackPanel>
+                </RadioButton>
+                <RadioButton x:Name="rbDropbox" GroupName="Path" Grid.Row="1" Grid.Column="0" Margin="200,5,5,5" Checked="rbDropbox_Checked">
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="/SecureBox;component/Images/Dropbox.png" Height="32" Width="32"></Image>
+                        <Label HorizontalAlignment="Center" VerticalAlignment="Center" Padding="5">Dropbox</Label>
+                    </StackPanel>
+                </RadioButton>
+                <RadioButton x:Name="rbOneDrive" GroupName="Path" Grid.Row="1" Grid.Column="1" Margin="0,5,5,5" Checked="rbOneDrive_Checked">
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="/SecureBox;component/Images/OneDrive.png" Height="32" Width="32"></Image>
+                        <Label HorizontalAlignment="Center" VerticalAlignment="Center" Padding="5">OneDrive</Label>
+                    </StackPanel>
+                </RadioButton>
+                <TextBox Name="textBoxFolder" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Left" Width="270" Margin="10,0,5,5" VerticalAlignment="Top" Text="" Height="23" />
+                <Button Name="buttonBrowse" Grid.Row="2" Grid.Column="2" Height="23" Width="75" Margin="5,0,10,5" HorizontalAlignment="Left" Content="Browse..." Click="buttonBrowse_Click" />
+                <Label Grid.Row="3" Content="Label for the SecureBox drive:" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="10,5,5,5" Padding="0" />
+                <TextBox Name="textBoxLabel" Grid.Row="3" Grid.Column="2" Width="137" HorizontalAlignment="Left" Margin="5,5,10,5" Text="SecureBox" Height="23" LostFocus="textBoxLabel_LostFocus" />
+                <Label Grid.Row="4" Content="Choose the drive letter of SecureBox:" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="10,5,5,10" Padding="0" />
+                <ComboBox Name="comboBoxLetters" Grid.Row="4" Grid.Column="2" Width="57" Height="21" HorizontalAlignment="Left" Margin="5,5,10,10" />
             </Grid>
         </GroupBox>
         <GroupBox DockPanel.Dock="Top" Header="Security Settings" Margin="10,5">
