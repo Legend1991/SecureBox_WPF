@@ -84,12 +84,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="User Interface Layer\CheckPassword.xaml.cs">
+      <DependentUpon>CheckPassword.xaml</DependentUpon>
+    </Compile>
     <Compile Include="User Interface Layer\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="User Interface Layer\PasswordChange.xaml.cs">
       <DependentUpon>PasswordChange.xaml</DependentUpon>
     </Compile>
+    <Page Include="User Interface Layer\CheckPassword.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="User Interface Layer\MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

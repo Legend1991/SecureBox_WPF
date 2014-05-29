@@ -68,7 +68,7 @@ namespace SecureBox.BL
             
             if (ValidPassword(drive))
             {
-                CryptoMirror crptMirr = new CryptoMirror(drive.Root, drive.Letter, drive.Label);
+                CryptoMirror crptMirr = new CryptoMirror(drive.Root, drive.Letter, drive.Label, internalKey);
                 Thread newThread = new Thread(CreateDrive);
                 newThread.Start(crptMirr);
                 threads.Add(drive.Letter, newThread);
@@ -132,6 +132,11 @@ namespace SecureBox.BL
             }
 
             return false;
+        }
+
+        public bool CheckPassword(DriveInfo drive, string password)
+        {
+            return password == GetDrivePassword(drive);
         }
 
         public char[] GetFreeDriveLetters()

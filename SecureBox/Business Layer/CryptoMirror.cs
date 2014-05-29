@@ -15,15 +15,16 @@ namespace SecureBox.BL
         private Encryptor encryptor;
         private const string settingsFile = ".settings.xml";
         private const string mountPointEnd = ":\\";
-        private const string internalKey = "9af6d18eed58756ea968c4e555c59d82";
+        private string internalKey;
         private const int threadCount = 0;
         private const int blockSize = 65536;
 
-        public CryptoMirror(string root, char letter, string label)
+        public CryptoMirror(string root, char letter, string label, string internalKey)
         {
             this.root = root;
             this.mountPoint = letter + mountPointEnd;
             this.label = label;
+            this.internalKey = internalKey;
             encryptor = new Encryptor(Encoding.Default.GetBytes(internalKey));
             Options = new DokanOptions();
             Options.DebugMode = false;

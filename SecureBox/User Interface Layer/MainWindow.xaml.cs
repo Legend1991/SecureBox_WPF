@@ -78,7 +78,8 @@ namespace SecureBox
         private void mountDrive_Click(object sender, RoutedEventArgs e)
         {
             DriveInfo drive = GetSelectedDrive();
-            secBox.MountDrive(drive);
+            CheckPassword checkPass = new CheckPassword(secBox, drive);
+            checkPass.ShowDialog();
             UpdateList();
         }
 
